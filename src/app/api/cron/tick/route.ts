@@ -11,11 +11,14 @@ export async function POST(req: NextRequest) {
 
     // In production, verify secret unless triggered by Vercel Cron
     if (env.isProduction) {
+      const url = new URL(req.url);
+      const keyParam = url.searchParams.get('key');
+      const isValidKey = keyParam && keyParam === env.cronSharedSecret;
       const isValidBearer =
         authHeader && authHeader === `Bearer ${env.cronSharedSecret}`;
       const isVercelCron = cronHeader === '1';
 
-      if (!isValidBearer && !isVercelCron) {
+      if (!isValidBearer && !isVercelCron && !isValidKey) {
         throw new UnauthenticatedError('Invalid or missing cron secret.');
       }
     }
