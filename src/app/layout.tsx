@@ -16,18 +16,35 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gray-50 text-gray-900 antialiased flex flex-col min-h-screen">
-        <DemoBar />
-        <Navbar />
-        <main className="flex-1 pb-16">{children}</main>
-        <footer className="bg-white border-t border-gray-200 py-6 text-center text-sm text-gray-500">
-          <div className="max-w-6xl mx-auto px-4">
-            <p className="font-semibold text-gray-700">GRACE</p>
-            <p className="text-xs text-gray-500 mt-1">
-              Continuous care. Independent ageing. · Not intended for medical emergencies.
-            </p>
-          </div>
-        </footer>
+      <body className="antialiased flex flex-col min-h-screen relative selection:bg-indigo-500/20 selection:text-indigo-900">
+        <div className="oasis-canvas flex flex-col min-h-screen relative">
+          {/* Subtle curved background lines inspired by the Oasis reference */}
+          <div className="oasis-curve-line hidden md:block" />
+          <div className="oasis-horizon" />
+
+          {/* Floating Accessory Header */}
+          <header className="relative z-30 pt-3 px-4">
+            <DemoBar />
+            <Navbar />
+          </header>
+
+          {/* Main Content Area */}
+          <main className="flex-1 relative z-10 pb-20 pt-4 px-4 sm:px-6 max-w-7xl mx-auto w-full">
+            {children}
+          </main>
+
+          {/* Ethereal Frosted Footer */}
+          <footer className="relative z-10 py-8 text-center text-sm">
+            <div className="max-w-4xl mx-auto px-4">
+              <div className="inline-flex items-center gap-2 glass-pill px-5 py-2 text-xs font-medium text-neutral-700">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>GRACE · Continuous care. Independent ageing.</span>
+                <span className="text-neutral-400">|</span>
+                <span className="text-neutral-500">Not intended for medical emergencies</span>
+              </div>
+            </div>
+          </footer>
+        </div>
       </body>
     </html>
   );

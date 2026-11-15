@@ -4,13 +4,13 @@ import { useEffect, useState, useCallback } from 'react';
 import {
   Check,
   X,
-  AlertCircle,
   Clock,
   Pill,
   HeartPulse,
   Sparkles,
   HelpCircle,
   CheckCircle2,
+  Calendar,
 } from 'lucide-react';
 import { CareEvent } from '../../domain/types';
 
@@ -75,43 +75,46 @@ export default function TodayPage() {
 
   if (loading) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-16 text-center">
-        <div className="animate-spin w-10 h-10 border-4 border-blue-700 border-t-transparent rounded-full mx-auto mb-4" />
-        <p className="text-xl font-bold text-gray-700">Loading today&apos;s routine...</p>
+      <div className="max-w-4xl mx-auto px-4 py-20 text-center">
+        <div className="animate-spin w-10 h-10 border-3 border-indigo-600 border-t-transparent rounded-full mx-auto mb-4" />
+        <p className="text-lg font-semibold text-neutral-700">Loading today&apos;s routine...</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6 sm:py-10">
-      {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+    <div className="max-w-4xl mx-auto py-4 sm:py-8">
+      {/* Header Banner in Oasis Style */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div>
-          <span className="text-sm font-extrabold uppercase tracking-widest text-blue-800">
-            Today&apos;s Care Schedule
-          </span>
-          <h1 className="text-3xl sm:text-5xl font-black text-gray-950 tracking-tight mt-1">
-            Good day!
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full glass-pill text-xs font-semibold text-neutral-700 mb-2">
+            <Calendar className="w-3.5 h-3.5 text-indigo-600" />
+            <span>
+              {new Date().toLocaleDateString('en-IN', {
+                weekday: 'long',
+                month: 'short',
+                day: 'numeric',
+              })}
+            </span>
+          </div>
+          <h1 className="text-3xl sm:text-5xl font-black text-neutral-900 tracking-tight">
+            Today&apos;s Care
           </h1>
-          <p className="text-lg sm:text-xl text-gray-600 font-medium mt-1">
-            {new Date().toLocaleDateString('en-IN', {
-              weekday: 'long',
-              month: 'long',
-              day: 'numeric',
-            })}
+          <p className="text-sm sm:text-base text-neutral-600 font-medium mt-1">
+            Dignified, self-paced routines with your care circle.
           </p>
         </div>
 
-        {/* Daily Progress Counter */}
-        <div className="bg-white border-2 border-blue-200 rounded-2xl p-4 shadow-sm flex items-center gap-4 self-start sm:self-auto">
-          <div className="w-12 h-12 rounded-xl bg-blue-700 flex items-center justify-center text-white">
-            <CheckCircle2 className="w-7 h-7" />
+        {/* Daily Progress Counter Pill */}
+        <div className="glass-pill rounded-full px-5 py-3 shadow-glass flex items-center gap-3.5 self-start sm:self-auto border border-white/80">
+          <div className="w-9 h-9 rounded-full bg-emerald-500/15 text-emerald-700 flex items-center justify-center font-bold">
+            <CheckCircle2 className="w-5 h-5" />
           </div>
           <div>
-            <div className="text-2xl font-black text-gray-950">
+            <div className="text-lg font-extrabold text-neutral-900 leading-tight">
               {takenCount} of {totalCount} Done
             </div>
-            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            <div className="text-[11px] font-semibold text-neutral-500 uppercase tracking-wider">
               {totalCount > 0 && takenCount === totalCount
                 ? 'All routines completed!'
                 : `${totalCount - takenCount} remaining today`}
@@ -125,32 +128,35 @@ export default function TodayPage() {
         <div
           role="status"
           aria-live="polite"
-          className="mb-8 p-4 bg-emerald-50 border-2 border-emerald-400 rounded-2xl flex items-center gap-3 text-emerald-950 text-lg font-bold shadow-md animate-fade-in"
+          className="mb-8 p-4 glass-card-pastel-mint rounded-2xl flex items-center gap-3 text-emerald-950 text-base font-bold shadow-md animate-fade-in"
         >
-          <Sparkles className="w-6 h-6 text-emerald-600 flex-shrink-0" />
+          <Sparkles className="w-5 h-5 text-emerald-600 shrink-0" />
           <span>{successMessage}</span>
         </div>
       )}
 
-      {/* ── 1. PROMINENT NEXT ACTION CARD (Elder-first centerpiece) ────── */}
+      {/* ── 1. PROMINENT NEXT ACTION CARD (Elevated Frosted Centerpiece) ────── */}
       {nextAction ? (
-        <div className="bg-white border-4 border-blue-700 rounded-3xl p-6 sm:p-10 shadow-2xl mb-12 relative overflow-hidden">
-          <div className="absolute top-0 right-0 bg-blue-700 text-white text-xs sm:text-sm font-black px-4 py-1.5 rounded-bl-2xl uppercase tracking-wider">
-            Up Next
+        <div className="glass-surface-elevated rounded-3xl p-6 sm:p-10 shadow-glass-hover mb-12 relative overflow-hidden transition-all">
+          {/* Status pill badge */}
+          <div className="flex items-center justify-between mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50/80 border border-indigo-200/60 text-xs font-bold text-indigo-700">
+              <Clock className="w-3.5 h-3.5" />
+              <span>Scheduled for {nextAction.localDueTime}</span>
+              {nextAction.status === 'missed' && (
+                <span className="ml-1 px-2 py-0.5 rounded-full bg-rose-500 text-white text-[10px] font-extrabold uppercase">
+                  Past Due
+                </span>
+              )}
+            </div>
+
+            <span className="px-3 py-1 rounded-full bg-neutral-900 text-white text-[11px] font-bold uppercase tracking-wider shadow-xs">
+              Up Next
+            </span>
           </div>
 
-          <div className="flex items-center gap-2 text-blue-800 text-lg sm:text-xl font-bold mb-2">
-            <Clock className="w-6 h-6 text-blue-700" />
-            <span>Scheduled for {nextAction.localDueTime}</span>
-            {nextAction.status === 'missed' && (
-              <span className="ml-2 px-2.5 py-0.5 rounded-full bg-red-100 text-red-800 text-xs font-black">
-                Past Due
-              </span>
-            )}
-          </div>
-
-          <div className="flex items-start gap-4 mt-2">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-blue-100 flex items-center justify-center text-blue-800 flex-shrink-0 mt-1">
+          <div className="flex items-start gap-5">
+            <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 border border-indigo-200/60 flex items-center justify-center text-indigo-700 shrink-0 mt-1 shadow-xs">
               {nextAction.kind === 'medication' ? (
                 <Pill className="w-8 h-8" />
               ) : (
@@ -159,75 +165,77 @@ export default function TodayPage() {
             </div>
 
             <div className="flex-1">
-              <h2 className="text-3xl sm:text-4xl font-black text-gray-950 tracking-tight leading-tight">
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-neutral-950 tracking-tight leading-snug">
                 {nextAction.titleSnapshot}
               </h2>
               {nextAction.instructionsSnapshot && (
-                <p className="text-xl sm:text-2xl text-blue-900 font-semibold mt-2">
-                  Instructions: {nextAction.instructionsSnapshot}
-                </p>
+                <div className="mt-2 text-base sm:text-lg text-neutral-700 font-medium bg-white/60 rounded-2xl p-3 border border-white/70">
+                  <span className="font-bold text-neutral-900">Instructions: </span>
+                  {nextAction.instructionsSnapshot}
+                </div>
               )}
             </div>
           </div>
 
-          {/* Large Action Controls (Min 56px height for elder accessibility) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 pt-6 border-t-2 border-gray-100">
+          {/* Large Action Controls (Elder UX: Min 56px height, high contrast pill buttons) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 pt-6 border-t border-neutral-200/60">
             <button
               onClick={() => handleTransition(nextAction.id, 'taken')}
               disabled={actionInProgress === nextAction.id}
-              className="w-full min-h-[58px] py-4 px-6 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl font-black text-xl sm:text-2xl flex items-center justify-center gap-3 shadow-lg hover:shadow-xl active:scale-[0.98] transition-all"
+              className="w-full min-h-[58px] py-4 px-6 bg-neutral-900 hover:bg-black text-white rounded-full font-bold text-lg sm:text-xl flex items-center justify-center gap-3 shadow-xl hover:scale-[1.01] active:scale-95 transition-all"
             >
-              <Check className="w-7 h-7 stroke-[3]" />
+              <Check className="w-6 h-6 stroke-[3]" />
               <span>Mark as Taken</span>
             </button>
 
             <button
               onClick={() => handleTransition(nextAction.id, 'skipped')}
               disabled={actionInProgress === nextAction.id}
-              className="w-full min-h-[58px] py-4 px-6 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-2xl font-bold text-lg sm:text-xl flex items-center justify-center gap-2 border border-gray-300 transition"
+              className="w-full min-h-[58px] py-4 px-6 glass-pill hover:bg-white text-neutral-800 rounded-full font-bold text-base sm:text-lg flex items-center justify-center gap-2 border border-white/80 transition-all hover:scale-[1.01] active:scale-95"
             >
-              <X className="w-6 h-6 text-gray-600" />
+              <X className="w-5 h-5 text-neutral-500" />
               <span>Skip this time</span>
             </button>
           </div>
 
-          <div className="text-center mt-4">
+          <div className="text-center mt-5">
             <button
               onClick={() => alert('Need assistance? An alert can be sent to your primary caregiver.')}
-              className="text-sm font-bold text-gray-500 hover:text-blue-700 inline-flex items-center gap-1.5 transition"
+              className="text-xs font-semibold text-neutral-500 hover:text-indigo-600 inline-flex items-center gap-1.5 transition"
             >
               <HelpCircle className="w-4 h-4" />
-              <span>Need help or feeling unwell?</span>
+              <span>Need help or feeling unwell? Notify Care Circle</span>
             </button>
           </div>
         </div>
       ) : (
         /* All caught up banner */
-        <div className="bg-emerald-50 border-2 border-emerald-300 rounded-3xl p-8 sm:p-12 text-center mb-12 shadow-sm">
-          <div className="w-16 h-16 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto mb-4">
-            <Check className="w-10 h-10 stroke-[3]" />
+        <div className="glass-card-pastel-mint rounded-3xl p-8 sm:p-12 text-center mb-12 shadow-glass border border-emerald-200/50">
+          <div className="w-14 h-14 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto mb-4 shadow-sm">
+            <Check className="w-8 h-8 stroke-[3]" />
           </div>
-          <h2 className="text-2xl sm:text-4xl font-black text-gray-950">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-neutral-950">
             You&apos;re completely up to date!
           </h2>
-          <p className="text-lg text-emerald-900 font-medium mt-2 max-w-lg mx-auto">
-            All scheduled medicines and routines for this period have been marked.
-            Relax and have a wonderful day.
+          <p className="text-sm sm:text-base text-neutral-600 font-medium mt-2 max-w-md mx-auto">
+            All scheduled medicines and routines for this period have been marked. Relax and enjoy your day.
           </p>
         </div>
       )}
 
       {/* ── 2. FULL DAY CHRONOLOGICAL SCHEDULE ────────────────────────── */}
       <div>
-        <h3 className="text-2xl font-black text-gray-950 mb-4 flex items-center gap-2">
-          <span>Today&apos;s Timeline</span>
-          <span className="text-sm font-semibold text-gray-500">
-            ({events.length} items)
-          </span>
-        </h3>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-xl sm:text-2xl font-bold text-neutral-900 tracking-tight flex items-center gap-2">
+            <span>Today&apos;s Timeline</span>
+            <span className="text-xs font-semibold text-neutral-500 glass-pill px-2.5 py-0.5 rounded-full">
+              {events.length} routines
+            </span>
+          </h3>
+        </div>
 
         {events.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-gray-200 p-8 text-center text-gray-500">
+          <div className="glass-surface rounded-2xl p-8 text-center text-neutral-500">
             No routines scheduled for today.
           </div>
         ) : (
@@ -241,69 +249,69 @@ export default function TodayPage() {
               return (
                 <div
                   key={event.id}
-                  className={`p-5 rounded-2xl border-2 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+                  className={`p-4 sm:p-5 rounded-2xl transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
                     isTaken
-                      ? 'bg-emerald-50/50 border-emerald-200'
+                      ? 'glass-card-pastel-mint opacity-85'
                       : isMissed
-                      ? 'bg-red-50/50 border-red-300'
+                      ? 'bg-rose-50/80 border border-rose-200/80 shadow-xs'
                       : isSkipped
-                      ? 'bg-gray-100/70 border-gray-200 opacity-75'
-                      : 'bg-white border-gray-200 hover:border-blue-400 shadow-sm'
+                      ? 'glass-pill opacity-75'
+                      : 'glass-surface shadow-xs hover:shadow-glass hover:-translate-y-0.5'
                   }`}
                 >
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-3.5">
                     <div
-                      className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0 ${
+                      className={`w-11 h-11 rounded-xl flex items-center justify-center font-bold text-base shrink-0 shadow-xs ${
                         isTaken
                           ? 'bg-emerald-600 text-white'
                           : isMissed
-                          ? 'bg-red-600 text-white'
+                          ? 'bg-rose-600 text-white'
                           : isSkipped
-                          ? 'bg-gray-300 text-gray-700'
-                          : 'bg-blue-100 text-blue-800'
+                          ? 'bg-neutral-300 text-neutral-700'
+                          : 'bg-indigo-600 text-white'
                       }`}
                     >
                       {event.kind === 'medication' ? (
-                        <Pill className="w-6 h-6" />
+                        <Pill className="w-5 h-5" />
                       ) : (
-                        <HeartPulse className="w-6 h-6" />
+                        <HeartPulse className="w-5 h-5" />
                       )}
                     </div>
 
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-bold text-gray-500 flex items-center gap-1">
-                          <Clock className="w-4 h-4" /> {event.localDueTime}
+                        <span className="text-xs font-bold text-neutral-500 flex items-center gap-1">
+                          <Clock className="w-3.5 h-3.5" /> {event.localDueTime}
                         </span>
                         {isTaken && (
-                          <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
+                          <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-extrabold uppercase tracking-wide">
                             Taken
                           </span>
                         )}
                         {isMissed && (
-                          <span className="px-2 py-0.5 rounded-full bg-red-100 text-red-800 text-xs font-bold">
+                          <span className="px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 text-[10px] font-extrabold uppercase tracking-wide">
                             Missed
                           </span>
                         )}
                         {isSkipped && (
-                          <span className="px-2 py-0.5 rounded-full bg-gray-200 text-gray-800 text-xs font-bold">
+                          <span className="px-2 py-0.5 rounded-full bg-neutral-200 text-neutral-800 text-[10px] font-extrabold uppercase tracking-wide">
                             Skipped
                           </span>
                         )}
                       </div>
 
                       <h4
-                        className={`text-xl font-bold mt-0.5 ${
+                        className={`text-lg font-bold mt-0.5 ${
                           isTaken
-                            ? 'text-gray-700 line-through'
-                            : 'text-gray-950'
+                            ? 'text-neutral-500 line-through'
+                            : 'text-neutral-900'
                         }`}
                       >
                         {event.titleSnapshot}
                       </h4>
 
                       {event.instructionsSnapshot && (
-                        <p className="text-sm text-gray-600">
+                        <p className="text-xs text-neutral-600 mt-0.5">
                           {event.instructionsSnapshot}
                         </p>
                       )}
@@ -316,15 +324,15 @@ export default function TodayPage() {
                       <button
                         onClick={() => handleTransition(event.id, 'taken')}
                         disabled={actionInProgress === event.id}
-                        className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl transition flex items-center gap-1.5"
+                        className="px-4 py-1.5 bg-neutral-900 hover:bg-black text-white font-semibold text-xs rounded-full transition-transform hover:scale-105 active:scale-95 shadow-sm flex items-center gap-1"
                       >
-                        <Check className="w-4 h-4" />
+                        <Check className="w-3.5 h-3.5" />
                         <span>Taken</span>
                       </button>
                       <button
                         onClick={() => handleTransition(event.id, 'skipped')}
                         disabled={actionInProgress === event.id}
-                        className="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-sm rounded-xl transition"
+                        className="px-3 py-1.5 glass-pill hover:bg-white text-neutral-700 font-medium text-xs rounded-full transition"
                       >
                         Skip
                       </button>
@@ -336,9 +344,9 @@ export default function TodayPage() {
                     <button
                       onClick={() => handleTransition(event.id, 'taken')}
                       disabled={actionInProgress === event.id}
-                      className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm rounded-xl transition self-end sm:self-auto flex items-center gap-1.5"
+                      className="px-4 py-1.5 bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs rounded-full transition-transform hover:scale-105 active:scale-95 shadow-sm self-end sm:self-auto flex items-center gap-1"
                     >
-                      <Check className="w-4 h-4" />
+                      <Check className="w-3.5 h-3.5" />
                       <span>Took late</span>
                     </button>
                   )}

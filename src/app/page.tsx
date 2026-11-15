@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Shield, KeyRound, UserCheck, ArrowRight, Sparkles } from 'lucide-react';
+import { Shield, KeyRound, UserCheck, ArrowRight, Sparkles, Heart, Users, Activity } from 'lucide-react';
 
 export default function LandingPage() {
   const router = useRouter();
@@ -68,125 +68,154 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10 sm:py-16">
-      {/* Hero section */}
-      <div className="text-center mb-12">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100 text-blue-900 text-sm font-semibold mb-6">
-          <Sparkles className="w-4 h-4 text-blue-700" />
-          PromptWars Catalyst Hackathon Entry
+    <div className="max-w-5xl mx-auto py-8 sm:py-14">
+      {/* Hero section styled after Oasis reference */}
+      <div className="text-center mb-14 relative z-10">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-pill text-xs font-semibold text-neutral-800 mb-6 shadow-xs border border-white/80">
+          <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
+          <span>Care-Circle Platform · PromptWars Catalyst 2026</span>
         </div>
-        <h1 className="text-4xl sm:text-6xl font-black text-gray-950 tracking-tight leading-tight">
-          GRACE
+
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-neutral-900 tracking-tight leading-[1.1] max-w-3xl mx-auto">
+          Continuous Care. <br />
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-900 via-indigo-700 to-purple-800">
+            Independent Ageing.
+          </span>
         </h1>
-        <p className="text-xl sm:text-2xl font-semibold text-blue-700 mt-2">
-          Continuous care. Independent ageing.
+
+        <p className="text-neutral-600 max-w-2xl mx-auto mt-6 text-base sm:text-lg leading-relaxed font-normal">
+          An elder-first healthcare coordination platform that orchestrates daily medications,
+          wellness routines, and appointments into a calm, dignified shared circle.
         </p>
-        <p className="text-gray-600 max-w-2xl mx-auto mt-4 text-base sm:text-lg">
-          An elder-first care-circle platform that turns daily medications,
-          healthcare routines, and appointments into a shared family workflow —
-          with the elder always in control.
-        </p>
+
+        {/* Oasis style central dark pill action */}
+        <div className="mt-8 flex justify-center">
+          <button
+            onClick={() => handleQuickDemo('MEENA2026', 'Meena')}
+            disabled={loading}
+            className="px-8 py-3.5 rounded-full bg-neutral-900 hover:bg-black text-white text-base font-semibold shadow-xl transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
+          >
+            <span>Enter Demo as Meena (72)</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
       </div>
 
       {error && (
-        <div className="mb-8 p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-center font-medium">
+        <div className="mb-8 p-4 rounded-2xl bg-rose-50/90 border border-rose-200 text-rose-800 text-center font-medium text-sm glass-pill">
           {error}
         </div>
       )}
 
-      {/* Evaluator Quick Access Cards */}
-      <div className="bg-white rounded-2xl border-2 border-blue-100 shadow-xl p-6 sm:p-8 mb-10">
-        <div className="flex items-center gap-2 text-blue-900 font-extrabold text-lg sm:text-xl mb-4">
-          <UserCheck className="w-6 h-6 text-blue-700" />
-          <span>One-Click Evaluator Roles (Pre-seeded Demo)</span>
+      {/* Floating Oasis Persona Cards across the Horizon */}
+      <div id="demo-personas" className="mb-14 relative z-10">
+        <div className="text-center mb-6">
+          <span className="text-xs uppercase tracking-widest font-bold text-neutral-500">
+            Select a Demo Persona
+          </span>
         </div>
-        <p className="text-sm text-gray-600 mb-6">
-          Click any persona to immediately enter the care circle with their role permissions:
-        </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {/* Elder */}
-          <button
-            onClick={() => handleQuickDemo('MEENA2026', 'Meena')}
-            disabled={loading}
-            className="p-5 rounded-xl border-2 border-blue-600 bg-blue-50/50 hover:bg-blue-100/70 text-left transition flex flex-col justify-between group shadow-sm hover:shadow"
-          >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+          {/* Card 1: Primary Elder (Meena) - Lilac Glass */}
+          <div className="glass-card-pastel-lavender rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all hover:-translate-y-1 hover:shadow-glass-hover duration-300">
             <div>
-              <span className="px-2.5 py-1 rounded-md bg-blue-700 text-white text-xs font-bold uppercase tracking-wider">
+              <div className="w-12 h-12 rounded-2xl bg-indigo-100/80 border border-indigo-200 flex items-center justify-center text-indigo-700 mb-5 shadow-xs">
+                <Heart className="w-6 h-6" />
+              </div>
+              <div className="inline-block px-2.5 py-0.5 rounded-full bg-indigo-100/90 text-indigo-800 text-[11px] font-bold uppercase tracking-wider mb-2">
                 Primary Elder
-              </span>
-              <h3 className="text-xl font-bold text-gray-950 mt-3 group-hover:text-blue-700">
+              </div>
+              <h3 className="text-2xl font-bold text-neutral-900">
                 Meena, 72
               </h3>
-              <p className="text-xs text-gray-600 mt-1">
-                Owner of profile. Today dashboard, 1-tap adherence, consent approval controls.
+              <p className="text-xs text-neutral-600 mt-2 leading-relaxed">
+                Owner of care profile. Simplified high-contrast Today dashboard, 1-tap adherence, consent approval controls.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-blue-200 flex items-center justify-between text-blue-700 font-bold text-sm">
-              <span>Enter as Elder</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <div className="mt-6 pt-4 border-t border-indigo-100/70">
+              <button
+                onClick={() => handleQuickDemo('MEENA2026', 'Meena')}
+                disabled={loading}
+                className="w-full py-3 rounded-full bg-neutral-900 hover:bg-black text-white text-xs font-semibold flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] active:scale-95 shadow-sm"
+              >
+                <span>Enter as Meena</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
             </div>
-          </button>
+          </div>
 
-          {/* Family Member */}
-          <button
-            onClick={() => handleQuickDemo('FAMILY2026', 'Arun')}
-            disabled={loading}
-            className="p-5 rounded-xl border-2 border-emerald-600 bg-emerald-50/50 hover:bg-emerald-100/70 text-left transition flex flex-col justify-between group shadow-sm hover:shadow"
-          >
+          {/* Card 2: Family Member (Arun) - Mint Glass */}
+          <div className="glass-card-pastel-mint rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all hover:-translate-y-1 hover:shadow-glass-hover duration-300">
             <div>
-              <span className="px-2.5 py-1 rounded-md bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-100/80 border border-emerald-200 flex items-center justify-center text-emerald-700 mb-5 shadow-xs">
+                <Users className="w-6 h-6" />
+              </div>
+              <div className="inline-block px-2.5 py-0.5 rounded-full bg-emerald-100/90 text-emerald-800 text-[11px] font-bold uppercase tracking-wider mb-2">
                 Family Member
-              </span>
-              <h3 className="text-xl font-bold text-gray-950 mt-3 group-hover:text-emerald-700">
+              </div>
+              <h3 className="text-2xl font-bold text-neutral-900">
                 Arun (Son)
               </h3>
-              <p className="text-xs text-gray-600 mt-1">
-                Remote visibility into adherence, appointments, activity feed, and escalation alerts.
+              <p className="text-xs text-neutral-600 mt-2 leading-relaxed">
+                Remote peace of mind. Full adherence history, upcoming doctor visits, and automated escalation email alerts.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-emerald-200 flex items-center justify-between text-emerald-700 font-bold text-sm">
-              <span>Enter as Family</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <div className="mt-6 pt-4 border-t border-emerald-100/70">
+              <button
+                onClick={() => handleQuickDemo('FAMILY2026', 'Arun')}
+                disabled={loading}
+                className="w-full py-3 rounded-full bg-neutral-900 hover:bg-black text-white text-xs font-semibold flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] active:scale-95 shadow-sm"
+              >
+                <span>Enter as Arun</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
             </div>
-          </button>
+          </div>
 
-          {/* Caretaker */}
-          <button
-            onClick={() => handleQuickDemo('CARE2026', 'Lakshmi')}
-            disabled={loading}
-            className="p-5 rounded-xl border-2 border-purple-600 bg-purple-50/50 hover:bg-purple-100/70 text-left transition flex flex-col justify-between group shadow-sm hover:shadow"
-          >
+          {/* Card 3: Caretaker (Lakshmi) - Warm Peach Glass */}
+          <div className="glass-card-pastel-peach rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all hover:-translate-y-1 hover:shadow-glass-hover duration-300">
             <div>
-              <span className="px-2.5 py-1 rounded-md bg-purple-700 text-white text-xs font-bold uppercase tracking-wider">
+              <div className="w-12 h-12 rounded-2xl bg-amber-100/80 border border-amber-200 flex items-center justify-center text-amber-700 mb-5 shadow-xs">
+                <Activity className="w-6 h-6" />
+              </div>
+              <div className="inline-block px-2.5 py-0.5 rounded-full bg-amber-100/90 text-amber-800 text-[11px] font-bold uppercase tracking-wider mb-2">
                 Caretaker
-              </span>
-              <h3 className="text-xl font-bold text-gray-950 mt-3 group-hover:text-purple-700">
+              </div>
+              <h3 className="text-2xl font-bold text-neutral-900">
                 Lakshmi
               </h3>
-              <p className="text-xs text-gray-600 mt-1">
-                Records doses on elder behalf, manages routine care, and proposes updates.
+              <p className="text-xs text-neutral-600 mt-2 leading-relaxed">
+                Daily caregiver helper. Records taken doses on Meena&apos;s behalf, assists with routines, and logs vital updates.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-purple-200 flex items-center justify-between text-purple-700 font-bold text-sm">
-              <span>Enter as Caretaker</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <div className="mt-6 pt-4 border-t border-amber-100/70">
+              <button
+                onClick={() => handleQuickDemo('CARE2026', 'Lakshmi')}
+                disabled={loading}
+                className="w-full py-3 rounded-full bg-neutral-900 hover:bg-black text-white text-xs font-semibold flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] active:scale-95 shadow-sm"
+              >
+                <span>Enter as Lakshmi</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
             </div>
-          </button>
+          </div>
         </div>
       </div>
 
-      {/* Manual Passcode Join Form */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-8">
-        <div className="flex items-center gap-2 text-gray-900 font-bold text-lg mb-4">
-          <KeyRound className="w-5 h-5 text-gray-600" />
+      {/* Manual Passcode Join Card in Frosted Glass */}
+      <div className="glass-surface rounded-3xl p-6 sm:p-8 max-w-2xl mx-auto shadow-glass relative z-10">
+        <div className="flex items-center gap-2 text-neutral-900 font-bold text-lg mb-2">
+          <KeyRound className="w-5 h-5 text-indigo-600" />
           <span>Have an Invitation Passcode?</span>
         </div>
+        <p className="text-xs text-neutral-600 mb-6">
+          Enter with an existing care circle code or test an invitation link.
+        </p>
 
         <form onSubmit={handleCustomJoin} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">
+              <label className="block text-xs font-bold text-neutral-700 mb-1.5 uppercase tracking-wide">
                 Your Name
               </label>
               <input
@@ -194,25 +223,25 @@ export default function LandingPage() {
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
                 placeholder="e.g. Ramesh"
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 text-base focus:border-blue-700 focus:ring-1 focus:ring-blue-700 outline-none"
+                className="w-full px-4 py-3 rounded-full glass-input text-sm text-neutral-900 outline-none"
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">
-                Invitation Passcode
+              <label className="block text-xs font-bold text-neutral-700 mb-1.5 uppercase tracking-wide">
+                Passcode
               </label>
               <input
                 type="text"
                 value={passcode}
                 onChange={(e) => setPasscode(e.target.value)}
                 placeholder="e.g. MEENA2026"
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 text-base uppercase font-mono tracking-wider focus:border-blue-700 focus:ring-1 focus:ring-blue-700 outline-none"
+                className="w-full px-4 py-3 rounded-full glass-input text-sm uppercase font-mono tracking-wider text-neutral-900 outline-none"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">
+            <label className="block text-xs font-bold text-neutral-700 mb-1.5 uppercase tracking-wide">
               Your Email (for notifications)
             </label>
             <input
@@ -220,24 +249,24 @@ export default function LandingPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="e.g. user@example.com"
-              className="w-full px-4 py-3 rounded-xl border border-gray-300 text-base focus:border-blue-700 focus:ring-1 focus:ring-blue-700 outline-none"
+              className="w-full px-4 py-3 rounded-full glass-input text-sm text-neutral-900 outline-none"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 bg-gray-900 hover:bg-gray-800 text-white rounded-xl font-bold text-lg transition flex items-center justify-center gap-2 shadow"
+            className="w-full py-3.5 bg-neutral-900 hover:bg-black text-white rounded-full font-semibold text-sm transition-transform hover:scale-[1.01] active:scale-95 flex items-center justify-center gap-2 shadow-lg"
           >
             <span>{loading ? 'Joining Care Circle...' : 'Join Care Circle'}</span>
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-4 h-4" />
           </button>
         </form>
       </div>
 
-      {/* Safety & Compliance notice */}
-      <div className="mt-8 text-center text-xs text-gray-500 max-w-xl mx-auto">
-        <Shield className="w-4 h-4 mx-auto mb-1 text-gray-400" />
+      {/* Medical disclaimer pill */}
+      <div className="mt-8 text-center text-xs text-neutral-500 max-w-lg mx-auto">
+        <Shield className="w-3.5 h-3.5 mx-auto mb-1 text-neutral-400" />
         GRACE is a coordination and reminder platform. It does not provide medical
         advice, diagnose conditions, or prescribe treatments.
       </div>

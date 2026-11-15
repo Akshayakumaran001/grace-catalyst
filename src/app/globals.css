@@ -4,14 +4,131 @@
 
 :root {
   --foreground-rgb: 17, 24, 39;
-  --background-rgb: 249, 250, 251;
+  --bg-gradient: radial-gradient(circle at 50% 0%, #E2E8FD 0%, #D1DCF8 40%, #BAC9F3 75%, #A6B7EE 100%);
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb));
+  background: var(--bg-gradient);
+  background-attachment: fixed;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Atmospheric Ambient Background */
+.oasis-canvas {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  background: radial-gradient(ellipse 90% 60% at 50% -10%, #FFFFFF 0%, #E3EAFE 45%, #C2D0F8 85%, #A7B8F0 100%);
+  background-attachment: fixed;
+}
+
+.oasis-horizon {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 380px;
+  background: radial-gradient(ellipse 120% 70% at 50% 100%, rgba(135, 155, 235, 0.35) 0%, rgba(165, 180, 245, 0.15) 50%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.oasis-curve-line {
+  position: absolute;
+  top: 180px;
+  left: 5%;
+  right: 5%;
+  height: 400px;
+  border-radius: 50%;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.45);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Glassmorphism Surface Utilities */
+.glass-surface {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 20px 45px -15px rgba(100, 115, 190, 0.16), 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+}
+
+.glass-surface-elevated {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 25px 60px -15px rgba(80, 95, 175, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+}
+
+.glass-card-pastel-lavender {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 243, 255, 0.8) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 18px 38px -12px rgba(110, 125, 205, 0.15);
+}
+
+.glass-card-pastel-peach {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 245, 240, 0.8) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 18px 38px -12px rgba(220, 140, 120, 0.12);
+}
+
+.glass-card-pastel-mint {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 253, 248, 0.8) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 18px 38px -12px rgba(80, 180, 140, 0.12);
+}
+
+.glass-card-pastel-blue {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(235, 248, 255, 0.8) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 18px 38px -12px rgba(100, 160, 220, 0.14);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 10px 25px -8px rgba(100, 115, 185, 0.12);
+}
+
+.glass-pill-nav {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 20px 40px -15px rgba(90, 105, 175, 0.18), 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(220, 226, 245, 0.9);
+  transition: all 0.2s ease;
+}
+
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  outline: none;
 }
 
 /* Accessible focus ring for keyboard navigation */

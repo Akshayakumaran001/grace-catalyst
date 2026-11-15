@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { Calendar, Plus, MapPin, User, Clock, Trash2 } from 'lucide-react';
+import { Calendar, Plus, MapPin, User, Clock, Trash2, X } from 'lucide-react';
 import { Appointment } from '../../domain/types';
 
 export default function AppointmentsPage() {
@@ -70,34 +70,38 @@ export default function AppointmentsPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-4xl mx-auto py-4 sm:py-8">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl sm:text-4xl font-black text-gray-950">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full glass-pill text-xs font-semibold text-neutral-700 mb-2">
+            <Calendar className="w-3.5 h-3.5 text-sky-600" />
+            <span>Consultations & Labs</span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-neutral-900 tracking-tight">
             Medical Appointments
           </h1>
-          <p className="text-base text-gray-600 mt-1">
+          <p className="text-sm text-neutral-600 mt-1">
             Doctor visits, lab tests, and hospital consultations.
           </p>
         </div>
 
         <button
           onClick={() => setShowAdd(true)}
-          className="px-5 py-3 bg-blue-700 hover:bg-blue-800 text-white rounded-xl font-bold flex items-center gap-2 shadow transition self-start sm:self-auto"
+          className="px-5 py-2.5 bg-neutral-900 hover:bg-black text-white rounded-full font-semibold text-sm flex items-center gap-2 shadow-sm transition-transform hover:scale-105 active:scale-95 self-start sm:self-auto"
         >
-          <Plus className="w-5 h-5" />
+          <Plus className="w-4 h-4" />
           <span>New Appointment</span>
         </button>
       </div>
 
       {loading ? (
-        <div className="py-12 text-center text-gray-500 font-semibold">
+        <div className="py-16 text-center text-neutral-500 font-semibold">
           Loading appointments...
         </div>
       ) : appointments.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center">
-          <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-          <h3 className="text-xl font-bold text-gray-800">No scheduled appointments</h3>
+        <div className="glass-surface rounded-3xl p-12 text-center">
+          <Calendar className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
+          <h3 className="text-xl font-bold text-neutral-800">No scheduled appointments</h3>
         </div>
       ) : (
         <div className="space-y-4">
@@ -106,45 +110,45 @@ export default function AppointmentsPage() {
             return (
               <div
                 key={appt.id}
-                className="bg-white border-2 border-gray-200 hover:border-blue-300 rounded-2xl p-6 shadow-sm transition flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                className="glass-card-pastel-blue rounded-3xl p-6 transition-all hover:-translate-y-0.5 hover:shadow-glass-hover duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
               >
                 <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 rounded-2xl bg-teal-50 text-teal-700 border border-teal-200 flex flex-col items-center justify-center flex-shrink-0 font-bold">
-                    <span className="text-xs uppercase">
+                  <div className="w-14 h-14 rounded-2xl bg-sky-500/15 border border-sky-300/50 text-sky-800 flex flex-col items-center justify-center shrink-0 font-bold shadow-xs">
+                    <span className="text-[10px] uppercase font-bold tracking-wider">
                       {dateObj.toLocaleDateString('en-IN', { month: 'short' })}
                     </span>
-                    <span className="text-xl leading-none">
+                    <span className="text-2xl font-black leading-none mt-0.5">
                       {dateObj.getDate()}
                     </span>
                   </div>
 
                   <div>
-                    <h3 className="text-2xl font-black text-gray-950">
+                    <h3 className="text-2xl font-bold text-neutral-950 tracking-tight">
                       {appt.title}
                     </h3>
                     {appt.provider && (
-                      <p className="text-sm font-semibold text-blue-900 flex items-center gap-1.5 mt-0.5">
-                        <User className="w-4 h-4 text-blue-600" />
+                      <p className="text-xs font-semibold text-sky-800 flex items-center gap-1.5 mt-0.5">
+                        <User className="w-3.5 h-3.5 text-sky-600" />
                         <span>{appt.provider}</span>
                       </p>
                     )}
-                    <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mt-2">
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-4 h-4 text-gray-400" />
+                    <div className="flex flex-wrap items-center gap-3 text-xs text-neutral-600 mt-2.5">
+                      <span className="glass-pill px-2.5 py-0.5 rounded-full flex items-center gap-1 font-medium">
+                        <Clock className="w-3 h-3 text-sky-600" />
                         {dateObj.toLocaleTimeString('en-IN', {
                           hour: '2-digit',
                           minute: '2-digit',
                         })}
                       </span>
                       {appt.location && (
-                        <span className="flex items-center gap-1">
-                          <MapPin className="w-4 h-4 text-gray-400" />
+                        <span className="glass-pill px-2.5 py-0.5 rounded-full flex items-center gap-1 font-medium">
+                          <MapPin className="w-3 h-3 text-sky-600" />
                           {appt.location}
                         </span>
                       )}
                     </div>
                     {appt.notes && (
-                      <p className="text-xs text-gray-500 italic mt-2">
+                      <p className="text-xs text-neutral-500 italic mt-2">
                         Notes: {appt.notes}
                       </p>
                     )}
@@ -153,10 +157,10 @@ export default function AppointmentsPage() {
 
                 <button
                   onClick={() => handleCancel(appt.id)}
-                  className="p-2 text-gray-400 hover:text-red-600 rounded-xl hover:bg-red-50 transition self-end sm:self-center"
+                  className="p-2 text-neutral-400 hover:text-rose-600 rounded-full hover:bg-white/80 transition self-end sm:self-center"
                   title="Cancel Appointment"
                 >
-                  <Trash2 className="w-5 h-5" />
+                  <Trash2 className="w-4 h-4" />
                 </button>
               </div>
             );
@@ -166,14 +170,23 @@ export default function AppointmentsPage() {
 
       {/* Add Modal */}
       {showAdd && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl border border-gray-200 shadow-2xl max-w-lg w-full p-6 sm:p-8">
-            <h2 className="text-2xl font-black text-gray-950 mb-4">
-              Schedule Medical Appointment
-            </h2>
+        <div className="fixed inset-0 bg-neutral-900/40 backdrop-blur-md z-50 flex items-center justify-center p-4">
+          <div className="glass-surface-elevated rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative border border-white/90">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-2xl font-bold text-neutral-950 tracking-tight">
+                Schedule Medical Appointment
+              </h2>
+              <button
+                onClick={() => setShowAdd(false)}
+                className="p-1 rounded-full text-neutral-400 hover:text-neutral-800 hover:bg-white/80 transition"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
             <form onSubmit={handleCreate} className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">
+                <label className="block text-xs font-bold text-neutral-700 mb-1.5 uppercase tracking-wide">
                   Appointment Title *
                 </label>
                 <input
@@ -182,12 +195,12 @@ export default function AppointmentsPage() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="e.g. Cardiology Review"
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:border-blue-700 outline-none"
+                  className="w-full px-4 py-2.5 rounded-full glass-input text-sm text-neutral-900 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">
+                <label className="block text-xs font-bold text-neutral-700 mb-1.5 uppercase tracking-wide">
                   Doctor / Clinic / Hospital
                 </label>
                 <input
@@ -195,12 +208,12 @@ export default function AppointmentsPage() {
                   value={provider}
                   onChange={(e) => setProvider(e.target.value)}
                   placeholder="e.g. Dr. Ramesh Rao (Cardiologist)"
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:border-blue-700 outline-none"
+                  className="w-full px-4 py-2.5 rounded-full glass-input text-sm text-neutral-900 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">
+                <label className="block text-xs font-bold text-neutral-700 mb-1.5 uppercase tracking-wide">
                   Date & Time *
                 </label>
                 <input
@@ -208,12 +221,12 @@ export default function AppointmentsPage() {
                   required
                   value={dateTime}
                   onChange={(e) => setDateTime(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:border-blue-700 outline-none"
+                  className="w-full px-4 py-2.5 rounded-full glass-input text-sm text-neutral-900 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">
+                <label className="block text-xs font-bold text-neutral-700 mb-1.5 uppercase tracking-wide">
                   Location / Address
                 </label>
                 <input
@@ -221,12 +234,12 @@ export default function AppointmentsPage() {
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   placeholder="e.g. Apollo Hospital, Greams Road"
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:border-blue-700 outline-none"
+                  className="w-full px-4 py-2.5 rounded-full glass-input text-sm text-neutral-900 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">
+                <label className="block text-xs font-bold text-neutral-700 mb-1.5 uppercase tracking-wide">
                   Preparation Notes
                 </label>
                 <input
@@ -234,21 +247,21 @@ export default function AppointmentsPage() {
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="e.g. Bring fasting blood report and recent BP diary"
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:border-blue-700 outline-none"
+                  className="w-full px-4 py-2.5 rounded-full glass-input text-sm text-neutral-900 outline-none"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-neutral-200/60">
                 <button
                   type="button"
                   onClick={() => setShowAdd(false)}
-                  className="px-5 py-2.5 rounded-xl border border-gray-300 font-bold text-sm text-gray-700 hover:bg-gray-100 transition"
+                  className="px-5 py-2.5 rounded-full glass-pill font-semibold text-xs text-neutral-700 hover:bg-white transition"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 bg-blue-700 hover:bg-blue-800 text-white rounded-xl font-bold text-sm shadow transition"
+                  className="px-6 py-2.5 bg-neutral-900 hover:bg-black text-white rounded-full font-semibold text-xs shadow-md transition-transform hover:scale-105 active:scale-95"
                 >
                   Schedule Appointment
                 </button>
